@@ -1,11 +1,19 @@
 import { server } from '../server';
 import { handlers } from './boards';
 import apiClient from '../../services/apiClient';
-import { usersMock, boardsMock, boardDetailsMock } from '../index';
+import { usersMock, boardsMock, boardDetailsMock, getBoardDetails } from '../index';
+import { storage } from '../../utils/storage';
 
 const [user] = usersMock;
 
-describe.skip('API.boards', () => {
+describe('API.boards', () => {
+  beforeEach(() => {
+    storage.setUser({ userId: user.id, token: user.id });
+  });
+  afterEach(() => {
+    storage.removeUser();
+  });
+
   describe('on get boards', () => {
     it('should return boards', async () => {
       // Arrange
@@ -24,7 +32,9 @@ describe.skip('API.boards', () => {
     it('should return board', async () => {
       // Arrange
       server.use(...handlers);
-      const expected = boardDetailsMock[0];
+      const [board] = boardsMock;
+      const boardDetails = getBoardDetails(board.id) || boardDetailsMock[0];
+      const expected = { ...boardDetails, name: board.name };
 
       // Act
       const data = await apiClient.boards.getById(expected.boardId);
@@ -69,7 +79,7 @@ describe.skip('API.boards', () => {
       const payload = boardsMock[0].id;
 
       // Act and Assert
-      await expect(apiClient.boards.delete(payload)).resolves.toBeUndefined();
+      await expect(apiClient.boards.delete(payload)).resolves.toBeNull();
     });
   });
 });

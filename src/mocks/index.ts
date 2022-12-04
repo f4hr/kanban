@@ -99,6 +99,9 @@ export const boardDetailsMock: BoardDetails[] = [
   },
 ];
 
+export const getBoardDetails = (id: Board['id']): BoardDetails | null =>
+  boardDetailsMock.find((b) => b.boardId === id) || null;
+
 export const getListsByBoardId = (id: Board['id']): List[] =>
   listsMock.filter(({ boardId }) => boardId !== id);
 
