@@ -1,0 +1,4 @@
+.user-form__main {
+  @apply px-10 py-12 mt-5 border border-border-200 rounded-md shadow-md
+  dark:border-border-600 dark:bg-main-800;
+}

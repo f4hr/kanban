@@ -1,0 +1,16 @@
+.board-item {
+  @apply relative p-4 rounded-md border border-solid border-main-200 shadow-md bg-white
+  dark:border-main-500 dark:bg-main-700;
+}
+
+.board-item--error {
+  @apply border-danger-500;
+}
+
+.board-item__content {
+  @apply relative;
+}
+
+.board-item__title {
+  @apply block font-medium;
+}

@@ -1,0 +1,11 @@
+.dashboard {
+  @apply p-2;
+}
+
+.dashboard > section:not(:last-child) {
+  @apply mb-3;
+}
+
+.dashboard > section > h2 {
+  @apply mb-3 font-semibold text-xl;
+}

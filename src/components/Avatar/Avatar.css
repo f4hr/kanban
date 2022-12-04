@@ -1,0 +1,24 @@
+.avatar {
+  @apply overflow-hidden relative block p-0 rounded-full bg-transparent;
+
+  user-select: none;
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+  text-decoration: none;
+  border: 0px none;
+}
+
+.avatar__image {
+  @apply block w-full h-full object-cover;
+}
+
+.avatar__placeholder {
+  @apply flex justify-center items-center w-full h-full text-base font-bold;
+
+  color: theme('colors.main[500]');
+  background-color: theme('colors.main[100]');
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 32px;
+}

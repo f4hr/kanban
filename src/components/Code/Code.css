@@ -1,0 +1,7 @@
+.code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New,
+    monospace;
+
+  @apply px-1 py-1 text-xs leading-snug rounded bg-main-200 text-main-800
+  dark:text-main-200 dark:bg-main-700;
+}

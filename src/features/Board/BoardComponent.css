@@ -1,0 +1,17 @@
+.lists {
+  @apply flex relative p-2;
+}
+
+.lists__item:not(:last-child) {
+  @apply relative;
+
+  width: 240px;
+}
+
+.lists__item:last-child {
+  width: 200px;
+}
+
+.lists__item:not(:last-child) {
+  @apply mr-4;
+}

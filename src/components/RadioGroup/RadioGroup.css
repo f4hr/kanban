@@ -1,0 +1,43 @@
+.radio-group {
+  @apply flex items-center;
+}
+
+.radio-group__list > li:not(:last-child) {
+  @apply mb-3;
+}
+
+.radio-group__list > li {
+  @apply flex items-center;
+}
+
+.radio-group__input {
+  @apply mr-2 bg-white
+    hover:bg-main-100
+    focus:ring-2 focus:ring-accent-500
+    dark:bg-main-300
+    dark:hover:bg-main-200
+    dark:focus:ring-accent-600;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1px solid theme('colors.main.300');
+}
+
+.radio-group label {
+  @apply leading-none capitalize;
+}
+
+.radio-group__indicator {
+  @apply relative flex items-center justify-center w-full h-full;
+}
+
+.radio-group__indicator::after {
+  @apply block bg-accent-500
+    dark:bg-accent-600;
+
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

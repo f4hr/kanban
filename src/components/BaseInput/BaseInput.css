@@ -1,0 +1,42 @@
+input {
+  display: inline-block;
+  max-width: 100%;
+
+  @apply p-1;
+}
+
+input:read-only {
+  @apply text-gray-500;
+}
+
+.input__wrapper-root > label {
+  @apply block mb-1 text-sm;
+}
+
+.input__wrapper--w-icon {
+  @apply relative;
+}
+
+.input__wrapper--w-icon .input__input {
+  @apply pr-8;
+}
+
+.input__icon-wrapper {
+  @apply flex justify-center items-center absolute top-0 right-0 w-8 h-full p-1;
+}
+
+.input__icon {
+  @apply w-full h-full rounded-md p-1 text-main-400 hover:text-main-500
+  dark:hover:text-main-300;
+}
+
+.input__error {
+  @apply mt-1 text-sm;
+}
+
+.input__error,
+.input__input--invalid,
+.input__input--invalid::placeholder {
+  @apply text-danger-500
+  dark:text-danger-200;
+}

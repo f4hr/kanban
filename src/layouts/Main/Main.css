@@ -1,0 +1,24 @@
+.main {
+  @apply flex h-full;
+}
+
+.main__container {
+  @apply flex flex-col w-full h-full;
+
+  width: calc(100% - var(--sidebar-width));
+}
+
+.main__title {
+  @apply py-3 pr-2 pl-3 bg-white
+  dark:bg-main-900;
+}
+
+.main__title > h1 {
+  @apply px-2 py-1 font-bold text-xl;
+}
+
+.main__content {
+  @apply flex-grow p-2;
+
+  height: calc(100% - var(--header-height));
+}

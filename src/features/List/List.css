@@ -1,0 +1,53 @@
+.list {
+  @apply border border-main-200 rounded bg-white ring-2 ring-main-100 ring-offset-0 ring-offset-main-100 transition
+  dark:border-main-700 dark:bg-main-800 dark:ring-main-900 dark:ring-offset-main-900;
+}
+
+.list--is-dragging,
+.list--drag-over {
+  @apply ring-accent-300 ring-offset-accent-50
+  dark:ring-accent-500/50 dark:ring-offset-main-800;
+}
+
+.list__item {
+  @apply mb-3;
+}
+
+.list__item.sortable-chosen {
+  @apply ring-accent-100 ring-offset-accent-50 bg-accent-50
+  dark:ring-accent-500/50 dark:ring-offset-main-800 dark:bg-main-800;
+}
+
+.list__header {
+  @apply flex items-center px-2 pt-2;
+}
+
+.list__header > .icon {
+  @apply shrink-0;
+}
+
+.list__title {
+  @apply relative;
+}
+
+.list__title .list__menu-btn {
+  @apply opacity-0 pointer-events-none;
+}
+
+.list:hover .list__menu-btn,
+.list__menu-btn[data-state='open'] {
+  @apply opacity-100 pointer-events-auto;
+}
+
+.list__menu-btn {
+  @apply absolute top-1 right-1 text-main-400 transition-opacity
+    dark:text-main-400;
+}
+
+.list__main {
+  @apply px-3 pb-3;
+}
+
+.list__drop-zone {
+  @apply h-px;
+}

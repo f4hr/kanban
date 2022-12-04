@@ -1,0 +1,44 @@
+.links-group__control {
+  @apply flex justify-between items-center w-full px-4 py-3 text-sm font-medium text-main-800
+    hover:bg-main-50 hover:text-main-900
+    dark:text-main-200
+    dark:hover:bg-gray-700;
+}
+
+.links-group__control--active {
+  @apply text-accent-800 bg-accent-50
+    hover:text-accent-800 hover:bg-accent-50
+    dark:bg-gray-600
+    dark:hover:text-main-100 dark:hover:bg-gray-600;
+}
+
+.links-group__control-content {
+  @apply inline-flex items-center;
+}
+
+.links-group__control-icon {
+  @apply w-7 h-7 text-accent-600 bg-accent-100
+    dark:text-accent-500 dark:bg-main-700 dark:border dark:border-main-600;
+}
+
+.links-group__link {
+  @apply block px-4 py-2 ml-7 text-sm text-main-700 border-l border-solid border-l-main-300
+    hover:text-main-800 hover:bg-main-100
+    dark:text-main-400 dark:border-l-main-600
+    dark:hover:bg-gray-700 dark:hover:text-main-200;
+}
+
+.links-group__link--active {
+  @apply font-medium border-l-accent-700 text-accent-700 bg-accent-100
+    hover:text-accent-700 hover:bg-accent-100
+    dark:text-main-200 dark:bg-main-700;
+}
+
+.links-group__chevron {
+  transform: none;
+  transition: transform 200ms ease;
+}
+
+.links-group__chevron--opened {
+  transform: rotate(90deg);
+}

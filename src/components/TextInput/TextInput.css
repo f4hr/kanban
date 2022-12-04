@@ -1,0 +1,16 @@
+.input__input--text,
+.input__input--text-unstyled {
+  @apply w-full pr-2 pl-1.5 rounded-md outline-none
+  focus:border-accent-600
+  disabled:text-main-500;
+
+  height: 36px;
+}
+
+.input__input--text {
+  @apply border border-border-300;
+}
+
+.input__input--text-unstyled {
+  @apply border-none;
+}

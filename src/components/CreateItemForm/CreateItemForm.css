@@ -1,0 +1,11 @@
+.create-item-form {
+  @apply w-full;
+}
+
+.create-item-form__input {
+  @apply text-sm bg-white dark:bg-main-800 dark:border-border-400;
+}
+
+.create-item-form__button {
+  @apply mt-3 uppercase bg-white disabled:bg-inherit dark:bg-main-800;
+}

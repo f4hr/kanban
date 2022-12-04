@@ -1,0 +1,10 @@
+.item-menu {
+  @apply px-2 py-1 border border-solid rounded border-border-300 bg-white shadow-sm
+  dark:bg-main-700 dark:border-border-400;
+}
+
+.item-menu__trigger {
+  @apply w-5 h-5 p-0.5 rounded-md text-main-400
+    hover:bg-main-100
+    dark:hover:text-main-300 dark:hover:bg-main-600;
+}

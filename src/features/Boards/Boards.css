@@ -1,0 +1,11 @@
+.boards__list {
+  @apply grid grid-cols-12 gap-3;
+}
+
+.boards__list > li {
+  @apply max-sm:col-span-full
+    sm:max-md:col-span-6
+    md:max-lg:col-span-4
+    lg:max-2xl:col-span-3
+    2xl:col-span-2;
+}

@@ -1,0 +1,11 @@
+.theme-icon {
+  @apply inline-flex justify-center items-center;
+}
+
+.theme-icon--size-md {
+  @apply w-6 h-6;
+}
+
+.theme-icon--radius-md {
+  @apply rounded-md;
+}
