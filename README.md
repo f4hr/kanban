@@ -7,6 +7,9 @@
 Start dev server with mocked backend
 
 ```sh
+# Example user credentials
+# login: test@example.com
+# password: admin
 npm start
 ```
 
