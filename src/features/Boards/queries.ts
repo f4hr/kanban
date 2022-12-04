@@ -9,7 +9,6 @@ import { boardKeys } from '../../utils/queryKeyFactory';
 import { Board } from '../../types';
 
 export const useBoardsQuery = (
-  userId: string,
   options?: UseQueryOptions<
     void | { boards: Board[] },
     Error,
@@ -22,4 +21,4 @@ export const useBoardsQuery = (
     Error,
     void | { boards: Board[] },
     ReturnType<typeof boardKeys.lists>
-  >(boardKeys.lists(), () => apiClient.boards.getAll(userId), options);
+  >(boardKeys.lists(), () => apiClient.boards.getAll(), options);

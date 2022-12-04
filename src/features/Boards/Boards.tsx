@@ -5,14 +5,10 @@ import { Main } from '../../layouts/Main';
 // Components
 import { BoardsComponent } from './BoardsComponent';
 
-interface BoardsProps {
-  userId: string;
-}
-
-export function Boards({ userId }: BoardsProps) {
+export function Boards() {
   return (
     <Main title={<h1>Boards</h1>}>
-      <BoardsComponent className="p-2.5" userId={userId} />
+      <BoardsComponent className="p-2.5" />
     </Main>
   );
 }

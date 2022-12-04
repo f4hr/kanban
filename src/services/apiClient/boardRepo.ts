@@ -13,7 +13,7 @@ interface BoardRepository extends Repository<DefaultPayload, BoardResponse> {
    *
    * @returns List of boards.
    */
-  getAll: (userId: Board['ownerId']) => Promise<void | { boards: Board[] }>;
+  getAll: () => Promise<void | { boards: Board[] }>;
   /**
    * Get board by ID.
    *
@@ -61,9 +61,8 @@ interface BoardRepository extends Repository<DefaultPayload, BoardResponse> {
 }
 
 const boards: BoardRepository = {
-  getAll(userId) {
-    // TODO: refactor to use URL
-    return client.get(`${routes.apiBoardsPath()}?userId=${userId}`);
+  getAll() {
+    return client.get(routes.apiBoardsPath());
   },
   getById(id) {
     return client.get(routes.apiBoardsPath(id));

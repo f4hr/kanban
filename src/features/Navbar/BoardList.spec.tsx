@@ -5,17 +5,13 @@ import { screen } from '@testing-library/react';
 import routes from '../../routes';
 import { generateApiError } from '../../mocks/utils';
 import { server, rest } from '../../mocks/server';
-import { boardsMock, usersMock } from '../../mocks';
+import { boardsMock } from '../../mocks';
 import { renderWithQueryClient, wrapWithRouter, wrapWithTheme } from '../../testHelpers';
 // Components
 import { BoardList } from './BoardList';
 
-const user = usersMock[0];
-
 const renderBoardList = () => {
-  renderWithQueryClient(
-    wrapWithTheme(wrapWithRouter(<BoardList userId={user.id} />, { route: routes.homePath() })),
-  );
+  renderWithQueryClient(wrapWithTheme(wrapWithRouter(<BoardList />, { route: routes.homePath() })));
 };
 
 describe('Boards', () => {

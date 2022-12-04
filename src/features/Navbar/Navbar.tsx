@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconGauge, IconAdjustments, IconNotes } from '@tabler/icons';
+import { IconGauge, IconAdjustments } from '@tabler/icons';
 
 import './Navbar.css';
 // Utils
@@ -32,16 +32,7 @@ export function Navbar() {
               />
             </li>
             <li>
-              {user ? (
-                <BoardList userId={user.userId} />
-              ) : (
-                <LinksGroup
-                  key="boards"
-                  label="Boards"
-                  icon={<IconNotes size={18} />}
-                  to={routes.boardsPath()}
-                />
-              )}
+              <BoardList />
             </li>
             <li>
               <LinksGroup

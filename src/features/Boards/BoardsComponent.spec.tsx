@@ -12,6 +12,7 @@ import {
 import { server, rest } from '../../mocks/server';
 import { usersMock, boardsMock } from '../../mocks';
 import { generateApiError } from '../../mocks/utils';
+import { storage } from '../../utils/storage';
 // Components
 import { BoardsComponent } from './BoardsComponent';
 
@@ -20,14 +21,19 @@ const userId = usersMock[0].id;
 const renderBoards = () => {
   renderWithQueryClient(
     wrapWithTheme(
-      wrapWithToast(
-        wrapWithRouter(<BoardsComponent userId={userId} />, { route: routes.boardsPath() }),
-      ),
+      wrapWithToast(wrapWithRouter(<BoardsComponent />, { route: routes.boardsPath() })),
     ),
   );
 };
 
 describe('Boards', () => {
+  beforeEach(() => {
+    storage.setUser({ userId, token: userId });
+  });
+  afterEach(() => {
+    storage.removeUser();
+  });
+
   describe('On mount', () => {
     it('Should indicate loading state', async () => {
       // Arrange
@@ -43,7 +49,7 @@ describe('Boards', () => {
     it('Should display error message', async () => {
       // Arrange
       server.use(
-        rest.get(routes.apiBoardsPath(), async (req, res, ctx) =>
+        rest.get(routes.apiBoardsPath(), async (_req, res, ctx) =>
           res.once(ctx.status(400), ctx.json(generateApiError(400))),
         ),
       );
@@ -64,7 +70,7 @@ describe('Boards', () => {
       const boardLinksText = boardLinks.map((i) => i.textContent);
 
       // Assert
-      expect(boardLinksText).to.have.members(boardNames);
+      expect(boardLinksText).toIncludeSameMembers(boardNames);
     });
   });
 });

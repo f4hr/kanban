@@ -13,14 +13,13 @@ import { CreateBoardForm } from './CreateBoardForm';
 
 interface BoardsComponentProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
-  userId: string;
 }
 
-export function BoardsComponent({ className, userId }: BoardsComponentProps) {
+export function BoardsComponent({ className }: BoardsComponentProps) {
   const toast = useToast();
 
   // Queries
-  const { status, data } = useBoardsQuery(userId, {
+  const { status, data } = useBoardsQuery({
     onError(err) {
       toast.show({ type: 'error', title: 'Error', description: err.message });
     },

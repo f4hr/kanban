@@ -13,16 +13,12 @@ import { ThemeIcon, LinksGroup, Loader } from '../../components';
 
 const STORAGE_UI_STATE_KEY = 'ui.navbar.boards';
 
-interface BoardListProps {
-  userId: string;
-}
-
-export function BoardList({ userId }: BoardListProps) {
+export function BoardList() {
   const toast = useToast();
   const [, params] = useRoute<{ boardId: string }>(routes.boardPath(':boardId'));
 
   // Queries
-  const { status, data } = useBoardsQuery(userId, {
+  const { status, data } = useBoardsQuery({
     onError(err) {
       toast.show({ type: 'error', title: 'Error', description: err.message });
     },

@@ -10,17 +10,16 @@ import { storageKeys } from '../index';
 
 import type { UserDetails, Board, List, Card, BoardDetails, ApiError } from '../../types';
 
-type GetBoardsBody = { userId: Board['ownerId'] };
 type CreateBoardBody = Pick<Board, 'name'>;
 type UpdateBoardBody = Pick<Board, 'name'> &
   Pick<BoardDetails, 'listIds'> & { lists: Pick<List, 'id' | 'cardIds'>[] };
 
 export const handlers = [
   // Get boards
-  rest.get<GetBoardsBody, { userId: string }, { boards: Board[] } | ApiError>(
+  rest.get<DefaultBodyType, PathParams, { boards: Board[] } | ApiError>(
     routes.apiBoardsPath(),
     async (req, res, ctx) => {
-      const userId = req.url.searchParams.get('userId');
+      const userId = getToken(req.headers.get('authorization') || '');
 
       const userDetailsMock: UserDetails[] = storage.getItem(storageKeys.USER_DETAILS()) ?? [];
       const currentUserDetails = userDetailsMock.find((u) => u.userId === userId);

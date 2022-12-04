@@ -21,7 +21,7 @@ describe('API.boards', () => {
       const expected = { boards: boardsMock };
 
       // Act
-      const data = await apiClient.boards.getAll(user.id);
+      const data = await apiClient.boards.getAll();
 
       // Assert
       expect(data).toEqual(expected);
