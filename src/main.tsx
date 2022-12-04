@@ -8,24 +8,28 @@ import { ThemeProvider } from './providers/ThemeProvider';
 import { App } from './App';
 import { ToastProvider } from './providers/ToastProvider';
 
-if (import.meta.env.VITE_MOCK_SERVER === 'true') {
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
-  const { worker } = require('./mocks/browser');
+function init() {
+  const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  worker.start();
+  root.render(
+    <AuthProvider>
+      <AuthedQueryClientProvider>
+        <ThemeProvider>
+          <ToastProvider>
+            <App />
+          </ToastProvider>
+        </ThemeProvider>
+      </AuthedQueryClientProvider>
+    </AuthProvider>,
+  );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
-root.render(
-  <AuthProvider>
-    <AuthedQueryClientProvider>
-      <ThemeProvider>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
-      </ThemeProvider>
-    </AuthedQueryClientProvider>
-  </AuthProvider>,
-);
+if (import.meta.env.DEV && import.meta.env.VITE_MOCK_SERVER) {
+  import('./mocks/browser')
+    .then(({ worker }) => worker.start())
+    .then(() => init())
+    // eslint-disable-next-line no-console
+    .catch((err) => console.warn(err));
+} else {
+  init();
+}
