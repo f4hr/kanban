@@ -1,14 +1,28 @@
 import { server } from '../server';
 import { handlers } from './boards';
 import apiClient from '../../services/apiClient';
-import { usersMock, boardsMock, boardDetailsMock, getBoardDetails } from '../index';
+import { resetStorage, storageKeys, getBoardDetails } from '../index';
 import { storage } from '../../utils/storage';
+// Types
+import { User, Board, BoardDetails } from '../../types';
 
-const [user] = usersMock;
+let usersMock: User[];
+let boardsMock: Board[];
+let boardDetailsMock: BoardDetails[];
+
+beforeAll(() => {
+  usersMock = storage.getItem(storageKeys.USERS()) || [];
+  boardsMock = storage.getItem(storageKeys.BOARDS()) || [];
+  boardDetailsMock = storage.getItem(storageKeys.BOARD_DETAILS()) || [];
+});
+afterAll(() => {
+  resetStorage();
+});
 
 describe('API.boards', () => {
   beforeEach(() => {
-    storage.setUser({ userId: user.id, token: user.id });
+    const userId = usersMock[0].id;
+    storage.setUser({ userId, token: userId });
   });
   afterEach(() => {
     storage.removeUser();

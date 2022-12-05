@@ -6,18 +6,27 @@ import userEvent from '@testing-library/user-event';
 import routes from '../../routes';
 import { generateApiError } from '../../mocks/utils';
 import { server, rest } from '../../mocks/server';
+import { resetStorage, storageKeys } from '../../mocks';
+import { storage } from '../../utils/storage';
 import { renderWithQueryClient, wrapWithRouter, wrapWithToast } from '../../testHelpers';
 // Components
 import { BoardItem } from './BoardItem';
 // Types
+import type { Board } from '../../types';
 import type { BoardItemProps } from './BoardItem';
-import { boardsMock } from '../../mocks';
 
-let board: BoardItemProps;
+let boardsMock: Board[];
+
+beforeAll(() => {
+  boardsMock = storage.getItem(storageKeys.BOARDS()) || [];
+});
+afterAll(() => {
+  resetStorage();
+});
 
 const renderBoardItem = () => {
   const [boardMock] = boardsMock;
-  board = {
+  const board: BoardItemProps = {
     boardId: boardMock.id,
     title: 'Foo board',
     link: '#',

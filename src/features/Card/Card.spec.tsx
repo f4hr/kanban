@@ -6,8 +6,9 @@ import userEvent from '@testing-library/user-event';
 import routes from '../../routes';
 import { generateApiError } from '../../mocks/utils';
 import { server, rest } from '../../mocks/server';
+import { resetStorage, storageKeys } from '../../mocks';
+import { storage } from '../../utils/storage';
 import { renderWithQueryClient, wrapWithToast } from '../../testHelpers';
-import { cardsMock } from '../../mocks';
 // Components
 import { Card } from './Card';
 // Types
@@ -15,8 +16,15 @@ import type { Card as CardType } from '../../types';
 
 let card: CardType;
 
-const renderCard = () => {
+beforeAll(() => {
+  const cardsMock: CardType[] = storage.getItem(storageKeys.CARDS()) || [];
   [card] = cardsMock;
+});
+afterAll(() => {
+  resetStorage();
+});
+
+const renderCard = () => {
   renderWithQueryClient(wrapWithToast(<Card card={card} dragHandle={<span>drag handle</span>} />));
 };
 

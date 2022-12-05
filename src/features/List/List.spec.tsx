@@ -2,22 +2,27 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 // Helpers
-import { listsMock, getListCards } from '../../mocks';
+import { getListCards, storageKeys, resetStorage } from '../../mocks';
+import { storage } from '../../utils/storage';
+import { wrapWithDnd, wrapWithQueryClient } from '../../testHelpers';
 // Components
 import { List } from './List';
 // Types
 import type { List as ListType, Card } from '../../types';
-import { wrapWithDnd, wrapWithQueryClient } from '../../testHelpers';
 
 let list: ListType;
 let cards: Card[];
 
-describe('List', () => {
-  beforeAll(() => {
-    [list] = listsMock;
-    cards = getListCards(listsMock[0].id);
-  });
+beforeAll(() => {
+  const listsMock: ListType[] = storage.getItem(storageKeys.LISTS()) || [];
+  [list] = listsMock;
+  cards = getListCards(listsMock[0].id);
+});
+afterAll(() => {
+  resetStorage();
+});
 
+describe('List', () => {
   describe('on mount', () => {
     beforeEach(() => {
       render(

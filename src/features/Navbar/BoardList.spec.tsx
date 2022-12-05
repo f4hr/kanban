@@ -5,14 +5,25 @@ import { screen } from '@testing-library/react';
 import routes from '../../routes';
 import { generateApiError } from '../../mocks/utils';
 import { server, rest } from '../../mocks/server';
-import { boardsMock } from '../../mocks';
+import { resetStorage, storageKeys } from '../../mocks';
+import { storage } from '../../utils/storage';
 import { renderWithQueryClient, wrapWithRouter, wrapWithTheme } from '../../testHelpers';
 // Components
 import { BoardList } from './BoardList';
+import { Board } from '../../types';
 
 const renderBoardList = () => {
   renderWithQueryClient(wrapWithTheme(wrapWithRouter(<BoardList />, { route: routes.homePath() })));
 };
+
+let boardsMock: Board[];
+
+beforeAll(() => {
+  boardsMock = storage.getItem(storageKeys.BOARDS()) || [];
+});
+afterAll(() => {
+  resetStorage();
+});
 
 describe('Boards', () => {
   describe('on success', () => {

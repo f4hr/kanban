@@ -2,7 +2,8 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 
 // Utils
-import { boardDetailsMock } from '../../mocks';
+import { resetStorage, storageKeys } from '../../mocks';
+import { storage } from '../../utils/storage';
 import { renderWithQueryClient } from '../../testHelpers';
 // Components
 import { BoardComponent } from './BoardComponent';
@@ -11,11 +12,15 @@ import type { BoardDetails } from '../../types';
 
 let board: BoardDetails;
 
-describe('Board', () => {
-  beforeEach(() => {
-    [board] = boardDetailsMock;
-  });
+beforeAll(() => {
+  const boardDetailsMock: BoardDetails[] = storage.getItem(storageKeys.BOARD_DETAILS()) || [];
+  [board] = boardDetailsMock;
+});
+afterAll(() => {
+  resetStorage();
+});
 
+describe('Board', () => {
   describe('on mount', () => {
     it('should display "Create list" form #smoke', () => {
       // Arrange

@@ -27,7 +27,7 @@ export const handlers = [
         return res(
           ctx.delay(ms()),
           ctx.status(404),
-          ctx.json(generateApiError(404, 'Board not found')),
+          ctx.json(generateApiError(404, 'User not found')),
         );
       }
 

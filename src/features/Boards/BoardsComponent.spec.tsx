@@ -10,13 +10,13 @@ import {
   wrapWithToast,
 } from '../../testHelpers';
 import { server, rest } from '../../mocks/server';
-import { usersMock, boardsMock } from '../../mocks';
 import { generateApiError } from '../../mocks/utils';
+import { resetStorage, storageKeys } from '../../mocks';
 import { storage } from '../../utils/storage';
 // Components
 import { BoardsComponent } from './BoardsComponent';
-
-const userId = usersMock[0].id;
+// Types
+import { User, Board } from '../../types';
 
 const renderBoards = () => {
   renderWithQueryClient(
@@ -26,8 +26,20 @@ const renderBoards = () => {
   );
 };
 
+let usersMock: User[];
+let boardsMock: Board[];
+
+beforeAll(() => {
+  usersMock = storage.getItem(storageKeys.USERS()) || [];
+  boardsMock = storage.getItem(storageKeys.BOARDS()) || [];
+});
+afterAll(() => {
+  resetStorage();
+});
+
 describe('Boards', () => {
   beforeEach(() => {
+    const userId = usersMock[0].id;
     storage.setUser({ userId, token: userId });
   });
   afterEach(() => {

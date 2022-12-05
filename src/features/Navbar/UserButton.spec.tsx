@@ -3,17 +3,20 @@ import { screen } from '@testing-library/react';
 
 // Utils
 import { renderWithQueryClient, wrapWithTheme } from '../../testHelpers';
-import { usersMock } from '../../mocks';
+import { storageKeys } from '../../mocks';
+import { storage } from '../../utils/storage';
 // Components
 import { UserButton } from './UserButton';
+// Types
+import { User } from '../../types';
 
-const userId = usersMock[0].id;
+const [user]: User[] = storage.getItem(storageKeys.USERS()) || [];
 
 describe('UserButton', () => {
   describe('on mount', () => {
     it('should display placeholder #smoke', () => {
       // Arrange
-      renderWithQueryClient(wrapWithTheme(<UserButton userId={userId} />));
+      renderWithQueryClient(wrapWithTheme(<UserButton userId={user.id} />));
 
       // Assert
       expect(screen.getByTitle(/loading user data/i)).toBeInTheDocument();

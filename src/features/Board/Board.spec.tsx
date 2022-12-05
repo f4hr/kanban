@@ -5,23 +5,32 @@ import { screen } from '@testing-library/react';
 // Utils
 import routes from '../../routes';
 import { server, rest } from '../../mocks/server';
-import { boardsMock, listsMock } from '../../mocks';
+import { storageKeys, resetStorage } from '../../mocks';
+import { storage } from '../../utils/storage';
 import { generateApiError } from '../../mocks/utils';
 import { renderWithQueryClient, wrapWithTheme, wrapWithToast } from '../../testHelpers';
 // Components
 import { Board } from './Board';
+// Types
+import { Board as BoardType, List } from '../../types';
 
 let boardId: string;
+let listsMock: List[];
+
+beforeAll(() => {
+  const boardsMock: BoardType[] = storage.getItem(storageKeys.BOARDS()) || [];
+  boardId = boardsMock[0].id;
+  listsMock = storage.getItem(storageKeys.LISTS()) || [];
+});
+afterAll(() => {
+  resetStorage();
+});
 
 const renderBoard = () => {
   renderWithQueryClient(wrapWithTheme(wrapWithToast(<Board boardId={boardId} />)));
 };
 
 describe('BoardContainer', () => {
-  beforeAll(() => {
-    boardId = boardsMock[0].id;
-  });
-
   describe('On error', () => {
     it('Sould display error message', async () => {
       // Arrange

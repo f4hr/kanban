@@ -7,7 +7,8 @@ import type { User, Board, List, Card, BoardDetails, UserDetails } from '../type
 const generateEntities = <T extends { id: string }>(arr: T[]): { [key: string]: T } =>
   arr.reduce((acc, item) => ({ ...acc, [item.id]: item }), {});
 
-export const storageKeys = {
+type StorageKey = 'USERS' | 'USER_DETAILS' | 'BOARDS' | 'BOARD_DETAILS' | 'LISTS' | 'CARDS';
+export const storageKeys: { [key in StorageKey]: () => string } = {
   USERS: () => 'usersMock',
   USER_DETAILS: () => 'userDetailsMock',
   BOARDS: () => 'boardsMock',
@@ -15,8 +16,9 @@ export const storageKeys = {
   LISTS: () => 'listsMock',
   CARDS: () => 'cardsMock',
 };
+export const mocks: { [key: string]: object[] } = {};
 
-export const usersMock: User[] = [
+const usersMock: User[] = [
   {
     id: uuid(),
     email: 'test@example.com',
@@ -24,11 +26,12 @@ export const usersMock: User[] = [
     boardIds: [],
   },
 ];
+mocks[storageKeys.USERS()] = usersMock;
 
 const [boardId1, boardId2] = [uuid(), uuid()];
 const [listId1, listId2] = [uuid(), uuid()];
 
-export const boardsMock: Board[] = [
+const boardsMock: Board[] = [
   {
     id: boardId1,
     name: 'Foo board',
@@ -42,8 +45,9 @@ export const boardsMock: Board[] = [
     userIds: [usersMock[0].id],
   },
 ];
+mocks[storageKeys.BOARDS()] = boardsMock;
 
-export const userDetailsMock: (UserDetails & { password: string })[] = [
+const userDetailsMock: (UserDetails & { password: string })[] = [
   {
     id: uuid(),
     userId: usersMock[0].id,
@@ -51,8 +55,9 @@ export const userDetailsMock: (UserDetails & { password: string })[] = [
     password: 'admin',
   },
 ];
+mocks[storageKeys.USER_DETAILS()] = userDetailsMock;
 
-export const cardsMock: Card[] = [
+const cardsMock: Card[] = [
   {
     id: uuid(),
     name: 'Write tests',
@@ -66,8 +71,9 @@ export const cardsMock: Card[] = [
     listId: listId2,
   },
 ];
+mocks[storageKeys.CARDS()] = cardsMock;
 
-export const listsMock: List[] = [
+const listsMock: List[] = [
   {
     id: listId1,
     name: 'Backlog',
@@ -81,8 +87,9 @@ export const listsMock: List[] = [
     cardIds: [cardsMock[1].id],
   },
 ];
+mocks[storageKeys.LISTS()] = listsMock;
 
-export const boardDetailsMock: BoardDetails[] = [
+const boardDetailsMock: BoardDetails[] = [
   {
     id: uuid(),
     boardId: boardId1,
@@ -98,6 +105,7 @@ export const boardDetailsMock: BoardDetails[] = [
     cards: {},
   },
 ];
+mocks[storageKeys.BOARD_DETAILS()] = boardDetailsMock;
 
 export const getBoardDetails = (id: Board['id']): BoardDetails | null =>
   boardDetailsMock.find((b) => b.boardId === id) || null;
@@ -109,17 +117,23 @@ export const getCardsByBoardId = (id: Board['id']): Card[] => {
   const filteredListsIds = getListsByBoardId(id).map((list) => list.id);
   return cardsMock.filter(({ listId }) => filteredListsIds.includes(listId));
 };
-
 export const getListCards = (listId: List['id']): Card[] =>
   cardsMock.filter((c) => c.listId === listId);
 
+const mapStorage = (fn: (key: string) => void) => {
+  Object.keys(storageKeys)
+    .map((k) => storageKeys[k as StorageKey]())
+    .forEach(fn);
+};
+
 export const initStorage = () => {
-  if (!storage.getItem(storageKeys.USERS())) storage.setItem(storageKeys.USERS(), usersMock);
-  if (!storage.getItem(storageKeys.USER_DETAILS()))
-    storage.setItem(storageKeys.USER_DETAILS(), userDetailsMock);
-  if (!storage.getItem(storageKeys.BOARDS())) storage.setItem(storageKeys.BOARDS(), boardsMock);
-  if (!storage.getItem(storageKeys.BOARD_DETAILS()))
-    storage.setItem(storageKeys.BOARD_DETAILS(), boardDetailsMock);
-  if (!storage.getItem(storageKeys.LISTS())) storage.setItem(storageKeys.LISTS(), listsMock);
-  if (!storage.getItem(storageKeys.CARDS())) storage.setItem(storageKeys.CARDS(), cardsMock);
+  mapStorage((key) => {
+    if (!storage.getItem(key)) {
+      storage.setItem(key, mocks[key]);
+    }
+  });
+};
+
+export const resetStorage = () => {
+  mapStorage((key) => storage.setItem(key, mocks[key]));
 };
