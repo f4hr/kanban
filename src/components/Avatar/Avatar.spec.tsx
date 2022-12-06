@@ -7,6 +7,9 @@ import { createThemeWrapper, wrapWithTheme } from '../../testHelpers';
 import { useTheme } from '../../hooks';
 // Components
 import { Avatar } from './Avatar';
+// Types
+import type { Theme } from '../../contexts/ThemeContext';
+import type { ColorShade } from '../../utils/theme';
 
 describe('Avatar', () => {
   describe('when image is not set', () => {
@@ -64,39 +67,32 @@ describe('Avatar', () => {
     });
   });
 
-  describe('when dark mode is enabled', () => {
-    it('should apply dark styles', () => {
-      // Arrange
-      const color = 'main';
-      const { result } = renderHook(() => useTheme(), {
-        wrapper: createThemeWrapper(),
+  const themeModeColors: {
+    theme: Theme['mode'];
+    bgColorShade: ColorShade;
+    textColorShade: ColorShade;
+  }[] = [
+    { theme: 'light', bgColorShade: '100', textColorShade: '600' },
+    { theme: 'dark', bgColorShade: '900', textColorShade: '300' },
+  ];
+
+  describe.each(themeModeColors)(
+    'when $theme mode is enabled',
+    ({ theme, bgColorShade, textColorShade }) => {
+      it(`should apply ${theme} styles`, () => {
+        // Arrange
+        const color = 'main';
+        const { result } = renderHook(() => useTheme(), {
+          wrapper: createThemeWrapper(),
+        });
+        const { colors } = result.current.theme;
+        render(wrapWithTheme(<Avatar color={color} />, { theme }));
+
+        // Assert
+        expect(screen.getByRole('presentation')).toHaveStyle(
+          `background-color: ${colors[color][bgColorShade]}; color: ${colors[color][textColorShade]}`,
+        );
       });
-      const { colors } = result.current.theme;
-      render(wrapWithTheme(<Avatar color={color} />, { theme: 'dark' }));
-
-      // Assert
-      expect(screen.getByRole('presentation')).toHaveStyle(
-        `background-color: ${colors[color]['900']}; color: ${colors[color]['300']}`,
-      );
-    });
-  });
-
-  describe('when light mode is enabled', () => {
-    it('should apply light styles', () => {
-      // Arrange
-      const color = 'main';
-      const { result } = renderHook(() => useTheme(), {
-        wrapper: createThemeWrapper(),
-      });
-      const { colors } = result.current.theme;
-      render(wrapWithTheme(<Avatar color={color} />, { theme: 'light' }));
-
-      // Assert
-      expect(screen.getByRole('presentation')).toHaveStyle(
-        `background-color: ${colors[color]['100']}; color: ${colors[color]['600']}`,
-      );
-    });
-  });
+    },
+  );
 });
-
-export {};

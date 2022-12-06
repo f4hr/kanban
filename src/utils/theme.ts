@@ -1,7 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import colors from 'tailwindcss/colors';
 
-type ColorShade = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+export type ColorShade =
+  | '50'
+  | '100'
+  | '200'
+  | '300'
+  | '400'
+  | '500'
+  | '600'
+  | '700'
+  | '800'
+  | '900';
 type DefaultColors = Omit<
   typeof colors,
   'lightBlue' | 'warmGray' | 'trueGray' | 'coolGray' | 'blueGray'
