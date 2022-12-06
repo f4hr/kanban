@@ -9,7 +9,7 @@
 }
 
 .main__title {
-  @apply py-3 pr-2 pl-3 bg-white
+  @apply py-3 px-2 bg-white
   dark:bg-main-900;
 }
 
