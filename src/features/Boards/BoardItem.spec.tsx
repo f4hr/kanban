@@ -8,7 +8,7 @@ import { generateApiError } from '../../mocks/utils';
 import { server, rest } from '../../mocks/server';
 import { resetStorage, storageKeys } from '../../mocks';
 import { storage } from '../../utils/storage';
-import { renderWithQueryClient, wrapWithRouter, wrapWithToast } from '../../testHelpers';
+import { renderWithProviders, wrapWithRouter } from '../../testHelpers';
 // Components
 import { BoardItem } from './BoardItem';
 // Types
@@ -32,12 +32,10 @@ const renderBoardItem = () => {
     link: '#',
   };
 
-  renderWithQueryClient(
-    wrapWithToast(
-      wrapWithRouter(<BoardItem boardId={board.boardId} title={board.title} link={board.link} />, {
-        route: routes.boardsPath(),
-      }),
-    ),
+  renderWithProviders(
+    wrapWithRouter(<BoardItem boardId={board.boardId} title={board.title} link={board.link} />, {
+      route: routes.boardsPath(),
+    }),
   );
 };
 

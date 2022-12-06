@@ -3,12 +3,7 @@ import { screen } from '@testing-library/react';
 
 // Utils
 import routes from '../../routes';
-import {
-  renderWithQueryClient,
-  wrapWithRouter,
-  wrapWithTheme,
-  wrapWithToast,
-} from '../../testHelpers';
+import { renderWithProviders, wrapWithRouter } from '../../testHelpers';
 import { server, rest } from '../../mocks/server';
 import { generateApiError } from '../../mocks/utils';
 import { resetStorage, storageKeys } from '../../mocks';
@@ -19,11 +14,7 @@ import { BoardsComponent } from './BoardsComponent';
 import { User, Board } from '../../types';
 
 const renderBoards = () => {
-  renderWithQueryClient(
-    wrapWithTheme(
-      wrapWithToast(wrapWithRouter(<BoardsComponent />, { route: routes.boardsPath() })),
-    ),
-  );
+  renderWithProviders(wrapWithRouter(<BoardsComponent />, { route: routes.boardsPath() }));
 };
 
 let usersMock: User[];

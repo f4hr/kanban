@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 
 // Utils
-import { renderWithQueryClient, wrapWithTheme } from '../../testHelpers';
+import { renderWithProviders } from '../../testHelpers';
 import { storageKeys } from '../../mocks';
 import { storage } from '../../utils/storage';
 // Components
@@ -16,7 +16,7 @@ describe('UserButton', () => {
   describe('on mount', () => {
     it('should display placeholder #smoke', () => {
       // Arrange
-      renderWithQueryClient(wrapWithTheme(<UserButton userId={user.id} />));
+      renderWithProviders(<UserButton userId={user.id} />);
 
       // Assert
       expect(screen.getByTitle(/loading user data/i)).toBeInTheDocument();

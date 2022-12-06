@@ -3,13 +3,13 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 // Utils
-import { renderWithQueryClient, wrapWithTheme } from '../../testHelpers';
+import { renderWithProviders } from '../../testHelpers';
 // Components
 import { AppSettings } from './AppSettings';
 
 describe('AppSettings', () => {
   beforeEach(() => {
-    renderWithQueryClient(wrapWithTheme(<AppSettings />));
+    renderWithProviders(<AppSettings />);
   });
 
   it('Sould display "Save" button', () => {
@@ -31,5 +31,3 @@ describe('AppSettings', () => {
     });
   });
 });
-
-export {};

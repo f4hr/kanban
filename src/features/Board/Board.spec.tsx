@@ -8,7 +8,7 @@ import { server, rest } from '../../mocks/server';
 import { storageKeys, resetStorage } from '../../mocks';
 import { storage } from '../../utils/storage';
 import { generateApiError } from '../../mocks/utils';
-import { renderWithQueryClient, wrapWithTheme, wrapWithToast } from '../../testHelpers';
+import { renderWithProviders } from '../../testHelpers';
 // Components
 import { Board } from './Board';
 // Types
@@ -27,7 +27,7 @@ afterAll(() => {
 });
 
 const renderBoard = () => {
-  renderWithQueryClient(wrapWithTheme(wrapWithToast(<Board boardId={boardId} />)));
+  renderWithProviders(<Board boardId={boardId} />);
 };
 
 describe('BoardContainer', () => {

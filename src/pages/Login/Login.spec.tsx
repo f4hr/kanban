@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 
 // Utils
 import routes from '../../routes';
-import { wrapWithRouter, renderWithQueryClient } from '../../testHelpers';
+import { wrapWithRouter, renderWithProviders } from '../../testHelpers';
 // Components
 import { Login } from './Login';
 
@@ -11,7 +11,7 @@ describe('Signup page', () => {
   describe('On mount', () => {
     it('Should render page title #smoke', () => {
       // Arrange
-      renderWithQueryClient(wrapWithRouter(<Login />, { route: routes.loginPath() }));
+      renderWithProviders(wrapWithRouter(<Login />, { route: routes.loginPath() }));
 
       // Assert
       expect(screen.getByRole('heading', { name: /log in/i })).toBeInTheDocument();

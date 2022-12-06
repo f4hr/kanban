@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 // Utils
 import { resetStorage, storageKeys } from '../../mocks';
 import { storage } from '../../utils/storage';
-import { renderWithQueryClient } from '../../testHelpers';
+import { renderWithProviders } from '../../testHelpers';
 // Components
 import { BoardComponent } from './BoardComponent';
 // Types
@@ -27,9 +27,7 @@ describe('Board', () => {
       const { boardId } = board;
 
       // Act
-      renderWithQueryClient(
-        <BoardComponent boardId={boardId} listIds={[]} lists={{}} cards={{}} />,
-      );
+      renderWithProviders(<BoardComponent boardId={boardId} listIds={[]} lists={{}} cards={{}} />);
 
       // Assert
       expect(
@@ -45,7 +43,7 @@ describe('Board', () => {
       const listNames: string[] = lists ? Object.keys(lists).map((k) => lists[k].name) : [];
 
       // Act
-      renderWithQueryClient(
+      renderWithProviders(
         <BoardComponent boardId={boardId} listIds={listIds} lists={lists} cards={cards} />,
       );
       const listNameInputs = await screen.findAllByRole<HTMLInputElement>('textbox', {

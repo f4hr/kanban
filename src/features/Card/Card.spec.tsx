@@ -8,7 +8,7 @@ import { generateApiError } from '../../mocks/utils';
 import { server, rest } from '../../mocks/server';
 import { resetStorage, storageKeys } from '../../mocks';
 import { storage } from '../../utils/storage';
-import { renderWithQueryClient, wrapWithToast } from '../../testHelpers';
+import { renderWithProviders } from '../../testHelpers';
 // Components
 import { Card } from './Card';
 // Types
@@ -25,7 +25,7 @@ afterAll(() => {
 });
 
 const renderCard = () => {
-  renderWithQueryClient(wrapWithToast(<Card card={card} dragHandle={<span>drag handle</span>} />));
+  renderWithProviders(<Card card={card} dragHandle={<span>drag handle</span>} />);
 };
 
 describe('Card', () => {
