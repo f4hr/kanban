@@ -66,30 +66,24 @@ interface QueryKeyFactory<K> {
   detail: (id: string) => readonly [K, 'detail', typeof id];
 }
 
+function generateKeyFactory<T>(key: T): QueryKeyFactory<T> {
+  const keys = {
+    all: [key] as const,
+    lists: () => [...keys.all, 'list'] as const,
+    list: (filters: string) => [...keys.lists(), { filters }] as const,
+    details: () => [...keys.all, 'detail'] as const,
+    detail: (id: string) => [...keys.details(), id] as const,
+  };
+
+  return keys;
+}
+
 export const userKeys: Pick<QueryKeyFactory<'users'>, 'detail'> = {
   detail: (id: string) => ['users', 'detail', id] as const,
 };
-export const boardKeys: QueryKeyFactory<'boards'> = {
-  all: ['boards'] as const,
-  lists: () => [...boardKeys.all, 'list'] as const,
-  list: (filters: string) => [...boardKeys.lists(), { filters }] as const,
-  details: () => [...boardKeys.all, 'detail'] as const,
-  detail: (id: string) => [...boardKeys.details(), id] as const,
-};
-export const listKeys: QueryKeyFactory<'lists'> = {
-  all: ['lists'] as const,
-  lists: () => [...listKeys.all, 'list'] as const,
-  list: (filters: string) => [...listKeys.lists(), { filters }] as const,
-  details: () => [...listKeys.all, 'detail'] as const,
-  detail: (id: string) => [...listKeys.details(), id] as const,
-};
-export const cardKeys: QueryKeyFactory<'cards'> = {
-  all: ['cards'] as const,
-  lists: () => [...cardKeys.all, 'list'] as const,
-  list: (filters: string) => [...cardKeys.lists(), { filters }] as const,
-  details: () => [...cardKeys.all, 'detail'] as const,
-  detail: (id: string) => [...cardKeys.details(), id] as const,
-};
+export const boardKeys: QueryKeyFactory<'boards'> = generateKeyFactory('boards');
+export const listKeys: QueryKeyFactory<'lists'> = generateKeyFactory('lists');
+export const cardKeys: QueryKeyFactory<'cards'> = generateKeyFactory('cards');
 
 export default {
   boardKeys,
