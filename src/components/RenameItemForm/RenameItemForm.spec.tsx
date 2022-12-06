@@ -77,25 +77,6 @@ describe('RenameItemForm', () => {
     });
   });
 
-  describe('on unexpected error', () => {
-    it('should display "Unexpected error" message', async () => {
-      // Arrange
-      const user = userEvent.setup();
-      const errorMessage = 'Unexpected error';
-      const handleRename = vi.fn(() => Promise.reject(new Error(errorMessage)));
-      renderRenameItemForm(handleRename, 'placeholder');
-
-      // Act
-      await user.type(screen.getByRole<HTMLInputElement>('textbox', { name: label }), 'foobar');
-      await user.keyboard('[Enter]');
-
-      // Assert
-      expect(handleRename).toBeCalled();
-      await expect(handleRename).rejects.toThrow(errorMessage);
-      expect(screen.getByText(errorMessage)).toBeInTheDocument();
-    });
-  });
-
   describe('on "Esc" key down', () => {
     it('should reset form', async () => {
       // Arrange
