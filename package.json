@@ -2,7 +2,15 @@
   "name": "kanban",
   "private": true,
   "version": "0.1.0",
+  "author": {
+    "name": "Ilya Fakhrutdinov",
+    "email": "ilyaf4hr@gmail.com",
+    "url": "https://github.com/f4hr"
+  },
   "type": "module",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "VITE_MOCK_SERVER=true vite",
     "dev": "vite",
@@ -13,9 +21,6 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "postinstall": "npx msw init public/ --save"
-  },
-  "engines": {
-    "node": "16.x"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
