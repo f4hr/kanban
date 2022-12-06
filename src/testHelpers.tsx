@@ -74,3 +74,6 @@ export function wrapWithToast(ui: React.ReactNode) {
 export function renderWithQueryClient(ui: React.ReactNode) {
   return render(wrapWithQueryClient(ui));
 }
+export function renderWithProviders(ui: React.ReactNode) {
+  return render(wrapWithQueryClient(wrapWithTheme(wrapWithToast(ui))));
+}
