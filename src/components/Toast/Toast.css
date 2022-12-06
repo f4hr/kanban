@@ -15,7 +15,8 @@
   grid-template-areas: 'title action' 'description action';
   grid-template-columns: auto max-content;
 
-  @apply relative grid gap-x-4 items-center border border-solid rounded-md border-white bg-white shadow-sm;
+  @apply relative grid gap-x-4 items-center border border-solid rounded-md border-white bg-white shadow-sm
+  dark:bg-main-800;
 }
 .toast::before {
   @apply content-[''] block absolute top-1 bottom-1 left-1 w-1 rounded bg-transparent;
