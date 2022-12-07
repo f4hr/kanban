@@ -9,7 +9,7 @@ import routes from '../../routes';
 // Hooks
 import { useLogin } from './mutations';
 // Components
-import { Button, TextInput, PasswordInput, Alert } from '../../components';
+import { Button, TextInput, PasswordInput, Alert, Loader } from '../../components';
 import { CommonUserForm } from '../../components/CommonUserForm';
 
 type FormValues = {
@@ -43,16 +43,12 @@ export function LoginForm({ className }: LoginFormProps) {
     formState: { isValid, isSubmitting, submitCount, errors },
   } = form;
 
-  const { mutate: login } = useLogin({
-    onSuccess() {
-      setLocation(routes.homePath());
-    },
-    onError(err) {
-      setError('form', { type: 'custom', message: err.message });
-    },
-  });
+  const { mutateAsync: login } = useLogin();
 
-  const handleLogin = (payload: FormValues) => login(payload);
+  const onLogin = async (payload: FormValues) =>
+    login(payload)
+      .then(() => setLocation(routes.homePath()))
+      .catch((err: Error) => setError('form', { type: 'custom', message: err.message }));
 
   return (
     <CommonUserForm className={className}>
@@ -68,7 +64,12 @@ export function LoginForm({ className }: LoginFormProps) {
           </Link>
         </p>
       </CommonUserForm.Header>
-      <CommonUserForm.Form id={`${formId}-form`} handleSubmit={handleSubmit(handleLogin)}>
+      <CommonUserForm.Form
+        id={`${formId}-form`}
+        onSubmit={(e) => {
+          handleSubmit(onLogin)(e).catch(() => {});
+        }}
+      >
         <CommonUserForm.Item>
           <TextInput
             // eslint-disable-next-line react/jsx-props-no-spreading
@@ -102,13 +103,14 @@ export function LoginForm({ className }: LoginFormProps) {
         ) : null}
         <CommonUserForm.Item className="mt-5">
           <Button
+            className="text-center"
             form={`${formId}-form`}
             type="submit"
             variant="main"
-            fullWidth
             disabled={isSubmitting || (!isValid && submitCount > 0)}
+            fullWidth
           >
-            Log In
+            {isSubmitting ? <Loader className="stroke-white" size="sm" /> : 'Log In'}
           </Button>
         </CommonUserForm.Item>
       </CommonUserForm.Form>

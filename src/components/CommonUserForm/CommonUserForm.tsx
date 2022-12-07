@@ -24,19 +24,14 @@ CommonUserFormHeader.defaultProps = {
 interface CommonUserFormFormProps extends React.PropsWithChildren {
   id?: string;
   className?: string;
-  handleSubmit: (e?: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
-function CommonUserFormForm({ id, className, children, handleSubmit }: CommonUserFormFormProps) {
+function CommonUserFormForm({ id, className, children, onSubmit }: CommonUserFormFormProps) {
   const classNames = cn('user-form__main', className);
 
   return (
     <div className={classNames}>
-      <form
-        id={id}
-        onSubmit={(e) => {
-          handleSubmit(e).catch(() => {});
-        }}
-      >
+      <form id={id} onSubmit={onSubmit}>
         <ul>{children}</ul>
       </form>
     </div>

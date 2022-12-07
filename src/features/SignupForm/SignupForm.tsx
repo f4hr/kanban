@@ -10,7 +10,7 @@ import routes from '../../routes';
 // Hooks
 import { useSignup } from './mutations';
 // Components
-import { Button, TextInput, PasswordInput, Alert } from '../../components';
+import { Button, TextInput, PasswordInput, Alert, Loader } from '../../components';
 import { CommonUserForm } from '../../components/CommonUserForm';
 import { useToast } from '../../hooks';
 
@@ -48,21 +48,19 @@ export function SignupForm({ className }: SignupFormProps) {
     formState: { isValid, isSubmitting, submitCount, errors },
   } = form;
 
-  const { mutate: signup } = useSignup({
-    onSuccess() {
-      setLocation(routes.loginPath());
-      toast.show({
-        type: 'success',
-        title: 'Successful sign up',
-        description: 'You can log in now',
-      });
-    },
-    onError(err) {
-      setError('form', { type: 'custom', message: err.message });
-    },
-  });
+  const { mutateAsync: signup } = useSignup();
 
-  const handleLogin = (payload: FormValues) => signup(payload);
+  const onSignup = async (payload: FormValues) =>
+    signup(payload)
+      .then(() => {
+        setLocation(routes.loginPath());
+        toast.show({
+          type: 'success',
+          title: 'Successful sign up',
+          description: 'You can log in now',
+        });
+      })
+      .catch((err: Error) => setError('form', { type: 'custom', message: err.message }));
 
   return (
     <CommonUserForm className={className}>
@@ -75,7 +73,12 @@ export function SignupForm({ className }: SignupFormProps) {
           </Link>
         </p>
       </CommonUserForm.Header>
-      <CommonUserForm.Form id={`${formId}-form`} handleSubmit={handleSubmit(handleLogin)}>
+      <CommonUserForm.Form
+        id={`${formId}-form`}
+        onSubmit={(e) => {
+          handleSubmit(onSignup)(e).catch(() => {});
+        }}
+      >
         <CommonUserForm.Item>
           <TextInput
             // eslint-disable-next-line react/jsx-props-no-spreading
@@ -120,13 +123,14 @@ export function SignupForm({ className }: SignupFormProps) {
         ) : null}
         <CommonUserForm.Item className="mt-5">
           <Button
+            className="text-center"
             form={`${formId}-form`}
             type="submit"
             variant="main"
-            fullWidth
             disabled={isSubmitting || (!isValid && submitCount > 0)}
+            fullWidth
           >
-            Sign Up
+            {isSubmitting ? <Loader className="stroke-white" size="sm" /> : 'Sign Up'}
           </Button>
         </CommonUserForm.Item>
       </CommonUserForm.Form>
