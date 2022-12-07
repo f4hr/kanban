@@ -8,7 +8,7 @@ export const isStringEmpty = (value: string) => value == null || value === '';
 
 export const getToken = (authHeader: string) => authHeader.split(' ')[1];
 
-type HttpCodes = 400 | 401 | 404 | 500;
+type HttpCodes = 400 | 401 | 404 | 409 | 500;
 export const generateApiError = (code: HttpCodes, message?: string): ApiError => {
   switch (code) {
     case 400:
@@ -22,6 +22,12 @@ export const generateApiError = (code: HttpCodes, message?: string): ApiError =>
         statusCode: code,
         error: 'Not Found',
         message: message || 'Not found',
+      };
+    case 409:
+      return {
+        statusCode: code,
+        error: 'Conflict',
+        message: message || 'Conflict',
       };
     case 500:
       return {

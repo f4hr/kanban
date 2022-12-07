@@ -17,7 +17,7 @@ type CreateUserBody = Pick<User, 'email' | 'name'> & {
 
 export const handlers = [
   // Get user
-  rest.get<DefaultBodyType, { id: string }, Pick<User, 'id' | 'email' | 'name'> | ApiError>(
+  rest.get<DefaultBodyType, { id: string }, ApiError | Pick<User, 'id' | 'email' | 'name'>>(
     routes.apiUsersPath(':id'),
     (req, res, ctx) => {
       const { id } = req.params;
@@ -41,30 +41,42 @@ export const handlers = [
     },
   ),
   // Create user
-  rest.post<CreateUserBody, PathParams, User>(routes.apiUsersPath(), async (req, res, ctx) => {
-    const { email, password, name }: CreateUserBody = await req.json();
-    const user: User = {
-      id: uuid(),
-      email,
-      name,
-      boardIds: [],
-    };
-    const userDetails: UserDetails = {
-      id: uuid(),
-      userId: user.id,
-      ownedBoards: [],
-    };
-    const userDetailsWithPassword = { ...userDetails, password };
+  rest.post<CreateUserBody, PathParams, ApiError | User>(
+    routes.apiUsersPath(),
+    async (req, res, ctx) => {
+      const { email, password, name }: CreateUserBody = await req.json();
 
-    const users: User[] = storage.getItem(storageKeys.USERS()) ?? [];
-    const usersDetails: UserDetails[] = storage.getItem(storageKeys.USER_DETAILS()) ?? [];
+      const users: User[] = storage.getItem(storageKeys.USERS()) ?? [];
+      if (users.find((u) => u.email === email)) {
+        return res(
+          ctx.delay(ms()),
+          ctx.status(409),
+          ctx.json(generateApiError(409, 'User with this email already exists')),
+        );
+      }
 
-    // Update storage
-    storage.setItem(storageKeys.USERS(), [...users, user]);
-    storage.setItem(storageKeys.USER_DETAILS(), [...usersDetails, userDetailsWithPassword]);
+      const user: User = {
+        id: uuid(),
+        email,
+        name,
+        boardIds: [],
+      };
+      const userDetails: UserDetails = {
+        id: uuid(),
+        userId: user.id,
+        ownedBoards: [],
+      };
+      const userDetailsWithPassword = { ...userDetails, password };
 
-    return res(ctx.delay(ms()), ctx.status(201), ctx.json(user));
-  }),
+      const usersDetails: UserDetails[] = storage.getItem(storageKeys.USER_DETAILS()) ?? [];
+
+      // Update storage
+      storage.setItem(storageKeys.USERS(), [...users, user]);
+      storage.setItem(storageKeys.USER_DETAILS(), [...usersDetails, userDetailsWithPassword]);
+
+      return res(ctx.delay(ms()), ctx.status(201), ctx.json(user));
+    },
+  ),
 ];
 
 export default handlers;
