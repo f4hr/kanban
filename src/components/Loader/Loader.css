@@ -1,0 +1,7 @@
+.loader {
+  @apply inline-block;
+}
+
+.loader svg {
+  @apply inline-block;
+}

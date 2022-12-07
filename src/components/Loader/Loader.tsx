@@ -1,5 +1,6 @@
 import React from 'react';
 
+import './Loader.css';
 // Hooks
 import { useTheme } from '../../hooks';
 
@@ -8,7 +9,7 @@ interface LoaderProps extends React.HTMLAttributes<SVGElement> {
   color?: string;
 }
 
-export function Loader({ size = 'md', color }: LoaderProps) {
+export function Loader({ size = 'md', color, ...props }: LoaderProps) {
   const {
     theme: { colors },
   } = useTheme();
@@ -20,7 +21,7 @@ export function Loader({ size = 'md', color }: LoaderProps) {
   const stroke = color ?? colors.accent[600];
 
   return (
-    <div>
+    <span className="loader">
       <svg
         width={sizes[size]}
         height={sizes[size]}
@@ -28,6 +29,8 @@ export function Loader({ size = 'md', color }: LoaderProps) {
         xmlns="http://www.w3.org/2000/svg"
         stroke={stroke}
         role="presentation"
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
       >
         <g fill="none" fillRule="evenodd">
           <g transform="translate(2.5 2.5)" strokeWidth="5">
@@ -45,7 +48,7 @@ export function Loader({ size = 'md', color }: LoaderProps) {
           </g>
         </g>
       </svg>
-    </div>
+    </span>
   );
 }
 
