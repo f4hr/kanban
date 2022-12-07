@@ -30,12 +30,14 @@ export type ThemeColors = DefaultColors & {
 const deprecatedColors = ['lightBlue', 'warmGray', 'trueGray', 'coolGray', 'blueGray'];
 
 // Filter out deprecated colors to prevent console.log messages
-const validColors: DefaultColors = Object.keys(colors)
-  .filter((k) => !deprecatedColors.includes(k))
-  .reduce((acc, k) => {
-    const c = colors[k];
-    return { ...acc, [k]: c };
-  }, {} as DefaultColors);
+const getValidColors = (allColors: DefaultColors) =>
+  Object.keys(allColors)
+    .filter((k) => !deprecatedColors.includes(k))
+    .reduce((acc, k) => ({ ...acc, [k]: allColors[k] }), {} as DefaultColors);
+
+// Disable lint because tailwind's DefaultColors type doesn't have index signature
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+const validColors = getValidColors(colors as any);
 
 export const themeColors: ThemeColors = {
   ...validColors,
