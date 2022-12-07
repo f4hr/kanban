@@ -4,7 +4,7 @@ import './AppSettings.css';
 // Layouts
 import { Main } from '../../layouts/Main';
 // Components
-import { Button } from '../../components';
+import { Button, Loader } from '../../components';
 import { ThemeSettings } from './ThemeSettings';
 import { Status } from '../../types';
 
@@ -17,7 +17,11 @@ export function AppSettings() {
     e.preventDefault();
     setState('loading');
 
-    return Promise.resolve(() => setState('success'));
+    return Promise.resolve(
+      setTimeout(() => {
+        setState('success');
+      }, 200),
+    );
   };
 
   return (
@@ -33,7 +37,7 @@ export function AppSettings() {
             <ThemeSettings id={componentId} />
           </section>
           <Button type="submit" disabled={state === 'loading'}>
-            Save
+            {state === 'loading' ? <Loader className="stroke-white" size="sm" /> : 'Save'}
           </Button>
         </form>
       </div>

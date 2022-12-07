@@ -8,6 +8,7 @@ import { useToast } from '../../hooks';
 // Components
 import { Button } from '../Button';
 import { TextInput } from '../TextInput';
+import { Loader } from '../Loader';
 
 export interface CreateItemFormProps<T> extends React.HTMLAttributes<HTMLElement> {
   onCreateItem: (payload: string) => Promise<T>;
@@ -81,7 +82,7 @@ export function CreateItemForm<TData>({
           fullWidth
           size="sm"
         >
-          {submitText}
+          {isSubmitting ? <Loader size="sm" /> : submitText}
         </Button>
       </form>
     </div>
