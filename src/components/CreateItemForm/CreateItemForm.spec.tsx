@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 // Utils
-import { wrapWithToast } from '../../testHelpers';
+import { wrapWithTheme, wrapWithToast } from '../../testHelpers';
 // Components
 import { CreateItemForm } from './CreateItemForm';
 
@@ -29,7 +29,9 @@ describe('CreateItemForm', () => {
       const handleSubmit = vi.fn(() => Promise.reject(new Error(errorMessage)));
 
       render(
-        wrapWithToast(<CreateItemForm onCreateItem={handleSubmit} placeholder="placeholder" />),
+        wrapWithTheme(
+          wrapWithToast(<CreateItemForm onCreateItem={handleSubmit} placeholder="placeholder" />),
+        ),
       );
       const submitButton = screen.getByRole<HTMLButtonElement>('button', { name: /submit/i });
       const input = screen.getByPlaceholderText<HTMLInputElement>(/placeholder/i);
