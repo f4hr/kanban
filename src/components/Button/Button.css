@@ -1,5 +1,6 @@
 .btn {
-  @apply cursor-pointer leading-4;
+  @apply cursor-pointer leading-4
+  disabled:cursor-not-allowed;
 }
 
 .btn__content {
@@ -41,7 +42,9 @@
 .btn--main {
   @apply bg-accent-600 text-white
     active:translate-y-px
-    dark:bg-accent-600;
+    disabled:bg-main-400
+    dark:bg-accent-600
+    dark:disabled:bg-main-700;
 }
 
 .btn--outline {
