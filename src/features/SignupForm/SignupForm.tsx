@@ -24,7 +24,7 @@ type FormValues = {
 const schema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
-  name: yup.string().min(3),
+  name: yup.string().min(3).required(),
 });
 
 interface SignupFormProps {

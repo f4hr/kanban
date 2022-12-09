@@ -10,7 +10,7 @@ export type Status = QueryStatus | 'idle';
 
 export interface User {
   id: string;
-  name: string | null;
+  name: string;
   email: string;
   boardIds: Board['id'][];
   boards?: Board[];
