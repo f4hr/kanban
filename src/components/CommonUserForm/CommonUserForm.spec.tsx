@@ -11,7 +11,7 @@ describe('Collapsible', () => {
       render(
         <CommonUserForm>
           <CommonUserForm.Header>Header</CommonUserForm.Header>
-          <CommonUserForm.Form handleSubmit={vi.fn()}>
+          <CommonUserForm.Form onSubmit={vi.fn()}>
             Form
             <CommonUserForm.Item>Item</CommonUserForm.Item>
           </CommonUserForm.Form>
