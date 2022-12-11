@@ -17,8 +17,9 @@ export const STORAGE_UI_THEME_KEY = 'ui.theme.mode';
 export function ThemeProvider({ children, theme }: ThemeProviderProps) {
   const [systemTheme, setSystemTheme] = useState<Omit<ThemeMode, 'system'>>('light');
   const [mode, setMode] = useState<ThemeMode>(
-    theme ?? storage.getItem<ThemeMode>(STORAGE_UI_THEME_KEY) ?? 'light',
+    theme ?? storage.getItem<ThemeMode>(STORAGE_UI_THEME_KEY) ?? 'system',
   );
+  const isDark = mode === 'dark' || (mode === 'system' && systemTheme === 'dark');
   const documentRef = useRef<HTMLElement | null>(null);
 
   // Get "html" element ref
@@ -30,36 +31,38 @@ export function ThemeProvider({ children, theme }: ThemeProviderProps) {
   useLayoutEffect(() => {
     if (!window.matchMedia) return undefined;
 
-    const updateMode = (e: MediaQueryListEvent) => setSystemTheme(e.matches ? 'dark' : 'light');
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateMode);
+    const updateThemeMode = (e: MediaQueryListEvent) =>
+      setSystemTheme(e.matches ? 'dark' : 'light');
+
+    const colorSchemeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    colorSchemeMQ.addEventListener('change', updateThemeMode);
+
+    setSystemTheme(colorSchemeMQ ? 'dark' : 'light');
 
     return window
       .matchMedia('(prefers-color-scheme: dark)')
-      .removeEventListener('change', updateMode);
+      .removeEventListener('change', updateThemeMode);
   }, []);
 
   // Set "html" element class
   useEffect(() => {
-    if (mode === 'system') {
-      storage.removeItem(STORAGE_UI_THEME_KEY);
-    } else {
-      storage.setItem(STORAGE_UI_THEME_KEY, mode);
-    }
+    storage.setItem(STORAGE_UI_THEME_KEY, mode);
 
     if (!documentRef.current) return;
 
-    if (mode === 'dark' || (mode === 'system' && systemTheme === 'dark')) {
+    if (isDark) {
       documentRef.current.classList.add('dark');
     } else {
       documentRef.current.classList.remove('dark');
     }
-  }, [mode, systemTheme]);
+  }, [mode, isDark]);
 
   const getModes = (): ThemeMode[] => ['light', 'dark', 'system'];
 
   const value = useMemo(
     () => ({
       mode,
+      isDark,
       theme: {
         colors: themeColors,
       },
@@ -67,7 +70,7 @@ export function ThemeProvider({ children, theme }: ThemeProviderProps) {
       setThemeMode: (themeMode: ThemeMode) => setMode(themeMode),
       reset: () => setMode('light'),
     }),
-    [mode],
+    [mode, isDark],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

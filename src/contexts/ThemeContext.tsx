@@ -4,6 +4,7 @@ import type { ThemeColors } from '../utils/theme';
 
 export type Theme = {
   mode: 'light' | 'dark' | 'system';
+  isDark: boolean;
   theme: {
     colors: ThemeColors;
   };
