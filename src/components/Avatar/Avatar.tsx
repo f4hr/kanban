@@ -16,9 +16,8 @@ interface AvatarPlaceholderProps extends React.PropsWithChildren {
 function AvatarPlaceholder({ children, color = 'main', theme }: AvatarPlaceholderProps) {
   const {
     theme: { colors },
-    mode,
+    isDark,
   } = theme;
-  const isDark = mode === 'dark';
 
   const style = useMemo<{ backgroundColor: string; color: string }>(
     () => ({
