@@ -6,7 +6,8 @@ import { Main } from '../../layouts/Main';
 // Components
 import { Button, Loader } from '../../components';
 import { ThemeSettings } from './ThemeSettings';
-import { Status } from '../../types';
+
+import type { Status } from '../../types';
 
 export function AppSettings() {
   const componentId = useId();
