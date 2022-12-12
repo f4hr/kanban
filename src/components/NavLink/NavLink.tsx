@@ -19,8 +19,10 @@ export function NavLink({ className: classNameProp, ...props }: NavLinkProps) {
   return (
     <Link to={to}>
       {/* "href" prop is passed by Link component */}
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a className={className}>{children}</a>
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid, react/jsx-props-no-spreading */}
+      <a className={className} {...props}>
+        {children}
+      </a>
     </Link>
   );
 }
