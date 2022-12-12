@@ -17,8 +17,8 @@ export function NoMatch() {
             page has been moved to another URL.
           </p>
           <div className="flex justify-center">
-            <Button as={Link} to={routes.homePath()} size="md">
-              Go to home page
+            <Button as={Link} to={routes.dashboardPath()} size="md">
+              Go to Dashboard
             </Button>
           </div>
         </div>
