@@ -70,7 +70,7 @@ export function Card({ card, dragHandle, isDragging = false }: CardProps) {
         label="Card name"
         styles={{
           formContainer: 'pr-5',
-          input: 'bg-inherit',
+          input: 'bg-inherit max-md:text-base',
         }}
       />
       <ItemMenu

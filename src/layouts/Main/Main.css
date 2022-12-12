@@ -3,9 +3,10 @@
 }
 
 .main__container {
-  @apply flex flex-col w-full h-full;
+  @apply flex flex-col;
 
   width: calc(100% - var(--sidebar-width));
+  height: calc(100% - var(--tapbar-height));
 }
 
 .main__title {

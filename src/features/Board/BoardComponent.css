@@ -7,11 +7,24 @@
 
   width: 240px;
 }
-
-.lists__item:last-child {
-  width: 200px;
-}
-
 .lists__item:not(:last-child) {
   @apply mr-4;
+}
+
+@media (max-width: calc(theme('screens.md') - 1px)) {
+  .lists__item:not(:last-child) {
+    width: 200px;
+  }
+  .lists__item:last-child {
+    width: 180px;
+  }
+}
+
+@media (min-width: theme('screens.md')) {
+  .lists__item:not(:last-child) {
+    width: 240px;
+  }
+  .lists__item:last-child {
+    width: 200px;
+  }
 }

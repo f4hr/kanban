@@ -60,7 +60,7 @@ export function Board({ boardId }: BoardProps) {
           label="Board name"
           styles={{
             formContainer: 'inline-flex',
-            input: 'ml-0.5 font-bold text-xl bg-inherit',
+            input: 'ml-0.5 font-bold max-md:text-lg md:text-xl bg-inherit',
           }}
           resetOnDefaultValuesChange
         />

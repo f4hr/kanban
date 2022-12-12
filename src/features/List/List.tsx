@@ -58,7 +58,7 @@ export function List({ list, cards, dragHandle, isDragging }: ListProps) {
         label="List name"
         styles={{
           formContainer: 'pr-7',
-          input: 'font-bold text-xl bg-inherit dark:text-main-300',
+          input: 'font-bold max-md:text-lg md:text-xl bg-inherit dark:text-main-300',
         }}
       />
       <ItemMenu

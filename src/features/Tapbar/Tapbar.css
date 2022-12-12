@@ -1,0 +1,39 @@
+.tapbar {
+  @apply md:hidden fixed z-50 left-0 bottom-0 flex justify-center items-center w-full px-2 bg-white border-t border-border-200
+  dark:bg-main-800 dark:border-main-700;
+
+  height: var(--tapbar-height);
+}
+
+.tapbar__list {
+  @apply flex;
+}
+
+.tapbar__item:not(:last-child) {
+  @apply mr-3;
+}
+
+.tapbar__item-link {
+  @apply relative flex flex-col items-center h-full text-center;
+}
+
+.tapbar__item-icon {
+  @apply w-7 h-7 rounded text-accent-600
+  dark:text-accent-500;
+}
+.tapbar__item-link--active .tapbar__item-icon {
+  @apply bg-accent-100
+  dark:bg-main-700;
+}
+.tapbar__item-icon svg {
+  @apply inline-block;
+}
+
+.tapbar__item-title {
+  @apply mt-1 font-medium text-main-600 text-xs uppercase tracking-wider
+  dark:text-main-400;
+}
+.tapbar__item-link--active .tapbar__item-title {
+  @apply text-accent-800
+  dark:text-main-300;
+}
