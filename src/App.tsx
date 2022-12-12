@@ -13,6 +13,7 @@ import { Signup } from './pages/Signup';
 import { Board } from './pages/Board';
 import { Boards } from './pages/Boards';
 import { Settings } from './pages/Settings';
+import { Account } from './pages/Account';
 
 function ProtectedRoute({ path, children }: RouteProps) {
   const { loggedIn } = useAuth();
@@ -42,6 +43,9 @@ export function App() {
         </ProtectedRoute>
         <ProtectedRoute path={routes.settingsPath()}>
           <Settings />
+        </ProtectedRoute>
+        <ProtectedRoute path={routes.accountPath()}>
+          <Account />
         </ProtectedRoute>
         <Route path={routes.loginPath()}>
           <Login />

@@ -107,6 +107,20 @@ const boardPath = (id: string): string => buildUrl('boards', id);
 const settingsPath = (): string => buildUrl('settings');
 
 /**
+ * Get account URL
+ *
+ * @example
+ * ```ts
+ * // Usage
+ * routes.accountPath()
+ * // Output
+ * "http://localhost/account"
+ * ```
+ * @returns Account URL
+ */
+const accountPath = (): string => buildUrl('account');
+
+/**
  * Get login API URL
  *
  * @example
@@ -187,6 +201,7 @@ export default {
   dashboardPath,
   boardsPath,
   boardPath,
+  accountPath,
   settingsPath,
   apiLoginPath,
   apiUsersPath,

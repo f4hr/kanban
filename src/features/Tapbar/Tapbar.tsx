@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { IconGauge, IconNotes, IconAdjustments } from '@tabler/icons';
+import { IconGauge, IconNotes, IconAdjustments, IconUser } from '@tabler/icons';
 
 import './Tapbar.css';
 // Utils
@@ -13,6 +13,7 @@ const links = [
   { to: routes.dashboardPath(), title: 'Dashboard', icon: <IconGauge size={iconSize} /> },
   { to: routes.boardsPath(), title: 'Boards', icon: <IconNotes size={iconSize} /> },
   { to: routes.settingsPath(), title: 'Settings', icon: <IconAdjustments size={iconSize} /> },
+  { to: routes.accountPath(), title: 'Account', icon: <IconUser size={iconSize} /> },
 ];
 
 export function Tapbar() {
