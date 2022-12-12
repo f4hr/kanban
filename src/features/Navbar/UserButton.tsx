@@ -1,9 +1,11 @@
 import React from 'react';
+import { useLocation } from 'wouter';
 import cn from 'classnames';
 
 import './UserButton.css';
 // Utils
 import { useUserQuery } from './queries';
+import routes from '../../routes';
 // Components
 import { Avatar, Button, Placeholder } from '../../components';
 import { useToast } from '../../hooks';
@@ -16,6 +18,7 @@ interface UserButtonProps extends React.HTMLAttributes<HTMLElement> {
 
 export function UserButton({ className, userId, image, color, ...props }: UserButtonProps) {
   const toast = useToast();
+  const [, setLocation] = useLocation();
 
   // Queries
   const { status, data: user } = useUserQuery(userId, {
@@ -26,8 +29,13 @@ export function UserButton({ className, userId, image, color, ...props }: UserBu
 
   if (status !== 'success' || !user) {
     return (
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      <Button className={cn('user-button', className)} variant="unstyled" {...props}>
+      <Button
+        className={cn('user-button', className)}
+        variant="unstyled"
+        onClick={() => setLocation(routes.accountPath())}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+      >
         <div className="user-button__content">
           <Avatar className="mr-1 text-main-400" color={color} />
           <div className="flex-1 mr-1">
@@ -40,8 +48,13 @@ export function UserButton({ className, userId, image, color, ...props }: UserBu
   }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Button className={cn('user-button', className)} variant="unstyled" {...props}>
+    <Button
+      className={cn('user-button', className)}
+      variant="unstyled"
+      onClick={() => setLocation(routes.accountPath())}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    >
       <div className="user-button__content">
         <Avatar className="mr-2 text-main-400" src={image} color={color} />
         <div className="flex-1 mr-1 text-left">

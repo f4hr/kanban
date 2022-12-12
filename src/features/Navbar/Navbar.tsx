@@ -7,12 +7,12 @@ import routes from '../../routes';
 // Hooks
 import { useAuth } from '../../hooks';
 // Components
-import { Button, Code, ScrollArea, LinksGroup } from '../../components';
+import { Code, ScrollArea, LinksGroup } from '../../components';
 import { BoardList } from './BoardList';
 import { UserButton } from './UserButton';
 
 export function Navbar() {
-  const { logOut, user } = useAuth();
+  const { user } = useAuth();
 
   return (
     <div className="navbar">
@@ -46,17 +46,7 @@ export function Navbar() {
         </ScrollArea>
       </div>
       <div className="navbar__section p-4">
-        <UserButton className="mb-3" userId={user?.userId} color="accent" />
-        <Button
-          className="uppercase"
-          type="button"
-          variant="outline"
-          fullWidth
-          size="sm"
-          onClick={() => logOut()}
-        >
-          Log Out
-        </Button>
+        <UserButton userId={user?.userId} color="accent" />
       </div>
     </div>
   );
