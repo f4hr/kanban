@@ -31,3 +31,6 @@ coverage
 
 # Server mock
 public/mockServiceWorker.js
+
+# Stats
+stats.html
