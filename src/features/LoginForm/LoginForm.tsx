@@ -1,8 +1,8 @@
 import React, { useId } from 'react';
 import { useLocation, Link } from 'wouter';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { nopeResolver } from '@hookform/resolvers/nope';
+import Nope from 'nope-validator';
 import { IconAlertCircle } from '@tabler/icons';
 
 import routes from '../../routes';
@@ -18,9 +18,9 @@ type FormValues = {
   password: string;
 };
 
-const schema = yup.object({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
+const schema = Nope.object().shape({
+  email: Nope.string().email().required(),
+  password: Nope.string().required(),
 });
 
 interface LoginFormProps {
@@ -33,7 +33,7 @@ export function LoginForm({ className }: LoginFormProps) {
 
   const form = useForm<FormValues>({
     mode: 'onSubmit',
-    resolver: yupResolver(schema),
+    resolver: nopeResolver(schema),
   });
   const {
     handleSubmit,
